@@ -16,6 +16,7 @@ HABITATS = [
     "Posidonia",
     "Posidonia/Zostera",
     "Zostera",
+    "Halophila",
     "Mangrove",
     "Saltmarsh",
     "Seagrass",
@@ -25,10 +26,11 @@ HABITATS = [
 HABITAT_COLORS = {
     "Posidonia": "#c40000",   # Red
     "Posidonia/Zostera": "#fc03f0",   # Pink
-    "Zostera":   "#4AD5FF",   # Light blue
+    "Zostera":   "#0EC7FF",   # Light blue
+    "Halophila": "#FF9900",   # Orange
     "Mangrove":  "#13DF00",   # Bright green
-    "Saltmarsh": "#FFBD17",   # gold
-    "Seagrass":  "#00C187",   # cyan (generic seagrass)
+    "Saltmarsh": "#D6C100",   # gold
+    "Seagrass":  "#26EECD",   # cyan (generic seagrass)
     "Other":     "#8C00FF",   # purple
 }
 
