@@ -3,14 +3,14 @@ name=Priority Areas
 qgisMinimumVersion=3.16
 qgisMaximumVersion=4.99
 supportsQt6=yes
-description=Desktop map annotation for planning coastal habitat field validation. Flag points, lines and areas by habitat and check type so the field team knows where to focus.
-about=The desktop mapper annotates the map before fieldwork — flagging boundaries to check, presence/absence to confirm, possible change or dieback, and access notes — each tagged with a habitat class that drives the map colour. Annotations are stored in a GeoPackage in the project folder and travel with the project into the field. Designed to sit upstream of a field validation data-capture tool.
+description=Desktop map annotation for planning coastal habitat field validation. Mark points, lines and areas by habitat and check type so the field team knows where to focus.
+about=The desktop mapper annotates the map before fieldwork — highlighting boundaries to check, presence/absence to confirm, possible change or dieback, and access notes — each tagged with a habitat class that drives the map colour. Annotations are stored in a GeoPackage in the project folder and travel with the project into the field. Designed to sit upstream of a field validation data-capture tool.
 version=0.4.1
 author=Greg West
 email=gregory.west@dpird.nsw.gov.au
 
 tracker=
-repository=
+repository=https://github.com/GregjWest/QGIS_PriorityAreas
 
 tags=coastal,habitat,seagrass,mangrove,saltmarsh,validation,annotation,fieldwork,gis
 
