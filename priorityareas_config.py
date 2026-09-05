@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2026 Greg West
 """
 Priority Areas configuration.
 
@@ -14,9 +16,7 @@ stored values and the legend follow.
 # ----------------------------------------------------------------------
 HABITATS = [
     "Posidonia",
-    "Posidonia/Zostera",
     "Zostera",
-    "Halophila",
     "Mangrove",
     "Saltmarsh",
     "Seagrass",
@@ -24,13 +24,11 @@ HABITATS = [
 ]
 
 HABITAT_COLORS = {
-    "Posidonia": "#c40000",   # Red
-    "Posidonia/Zostera": "#fc03f0",   # Pink
-    "Zostera":   "#0EC7FF",   # Light blue
-    "Halophila": "#FF9900",   # Orange
+    "Posidonia": "#ff0080",   # Red
+    "Zostera":   "#0BF5FD",   # Light blue
     "Mangrove":  "#13DF00",   # Bright green
-    "Saltmarsh": "#D6C100",   # gold
-    "Seagrass":  "#26EECD",   # cyan (generic seagrass)
+    "Saltmarsh": "#FFBD17",   # gold
+    "Seagrass":  "#00ACC1",   # cyan (generic seagrass)
     "Other":     "#8C00FF",   # purple
 }
 
@@ -42,16 +40,11 @@ DEFAULT_HABITAT = "Posidonia"
 CHECK_TYPES = [
     "Check boundary",
     "Check presence/absence",
-    "Check classification and boundary",
     "Check density/condition",
     "Confirm classification",
     "Mooring scar check",
     "Possible dieback",
-    "Mangrove - Drone area",
-    "Saltmarsh - Drone area",
     "Drone area",
-    "Video",
-    "Photo",
     "Other",
 ]
 
