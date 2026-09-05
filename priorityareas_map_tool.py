@@ -28,14 +28,13 @@ from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import QDialog
 
+from . import priorityareas_vocabulary as vocab
 from .priorityareas_config import (
     GROUP_NAME,
     GPKG_NAME,
     LAYER_POINT,
     LAYER_LINE,
     LAYER_POLY,
-    DEFAULT_CHECK_TYPE,
-    DEFAULT_HABITAT,
 )
 from .priorityareas_layers import get_or_create_layer, apply_attrs
 from .priorityareas_dialog import PriorityAreasDialog
@@ -83,8 +82,8 @@ class PriorityAreasMapTool(QgsMapTool):
 
         # Remembered so the mapper doesn't re-pick for every flag.
         self._defaults = {
-            "check_type": DEFAULT_CHECK_TYPE,
-            "habitat":    DEFAULT_HABITAT,
+            "check_type": vocab.default_check_type(),
+            "habitat":    vocab.default_habitat(),
         }
 
     # ------------------------------------------------------------------

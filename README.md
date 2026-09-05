@@ -67,20 +67,33 @@ Then restart QGIS (or use the *Plugin Reloader* plugin during development) and e
 
 ## Configuration
 
-All of the tool's vocabulary lives in **`priorityareas_config.py`**. Edit the lists and dictionaries there — no other code changes needed — and the dialog, the stored values and the map legend all follow.
+There are two ways to change the vocabulary — the habitats, their colours, and the check types.
+
+### Settings dialog (recommended)
+
+Open **Priority Areas settings…** from the toolbar (gear icon) or **Plugins → Priority Areas**. From there you can:
+
+- **Add, remove, rename and reorder habitats**, and set each one's map colour with a colour picker.
+- **Edit the check-type list** (double-click to rename; add/remove/reorder).
+- **Reset to defaults** to return to the values shipped in `priorityareas_config.py`.
+
+Changes are saved to a settings file and take effect on the next annotation. New habitats appear in the dialog and get their colour in the styling automatically.
+
+> **Note:** renaming or removing a habitat or check type does **not** change annotations already on the map — existing features keep their old value and may no longer match the styling. Updating or leaving them is up to you. The dialog shows this warning too.
+
+### Settings file / defaults
+
+The live vocabulary is stored as JSON in your QGIS profile:
+
+```
+<QGIS profile>/PriorityAreas/vocabulary.json
+```
+
+You can hand-edit that file if you prefer. It's seeded on first run from the **defaults** in `priorityareas_config.py`, which look like this:
 
 ```python
-# Habitat classes shown in the dialog, in order.
-HABITATS = [
-    "Posidonia",
-    "Zostera",
-    "Mangrove",
-    "Saltmarsh",
-    "Seagrass",
-    "Other",
-]
+HABITATS = ["Posidonia", "Zostera", "Mangrove", "Saltmarsh", "Seagrass", "Other"]
 
-# The colour each habitat draws with on the map.
 HABITAT_COLORS = {
     "Posidonia": "#ff0080",
     "Zostera":   "#0BF5FD",
@@ -90,30 +103,18 @@ HABITAT_COLORS = {
     "Other":     "#8C00FF",
 }
 
-# What the field team needs to look at. Used as the map label.
 CHECK_TYPES = [
-    "Check boundary",
-    "Check presence/absence",
-    "Check density/condition",
-    "Confirm classification",
-    "Mooring scar check",
-    "Possible dieback",
-    "Drone area",
-    "Other",
+    "Check boundary", "Check presence/absence", "Check density/condition",
+    "Confirm classification", "Mooring scar check", "Possible dieback",
+    "Drone area", "Other",
 ]
 ```
 
-**To add a habitat:** add it to `HABITATS` *and* give it a colour in `HABITAT_COLORS`.
-**To change a colour:** edit its hex value in `HABITAT_COLORS`.
-**To change the check-type list:** edit `CHECK_TYPES`.
-
-The same file also sets the default selections and the storage names (`GPKG_NAME`, `GROUP_NAME`, and the per-geometry layer names).
-
-> Colours apply to newly created layers. If you change a colour after a layer already exists, re-apply the style (or start a fresh GeoPackage) to see it.
+Editing `priorityareas_config.py` only changes what a fresh install — or a "Reset to defaults" — starts from. Day-to-day changes go through the settings dialog or the JSON file. The storage names (`GPKG_NAME`, `GROUP_NAME`, and the layer names) also live in the config file and are not user-editable through the dialog.
 
 ### Toolbar icons
 
-The three tools use `resources/icon_point`, `icon_line`, and `icon_polygon` (PNG preferred, then SVG), falling back to the generic icon. Drop in your own files with those names to restyle the toolbar — no code change needed.
+The tools use `resources/icon_point`, `icon_line`, `icon_polygon`, and `icon_settings` (PNG preferred, then SVG), falling back to the generic icon. Drop in your own files with those names to restyle the toolbar — no code change needed.
 
 ---
 

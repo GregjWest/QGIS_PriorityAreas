@@ -20,6 +20,7 @@ except ImportError:
     from qgis.PyQt.QtWidgets import QAction, QActionGroup
 
 from .priorityareas_map_tool import PriorityAreasMapTool
+from .priorityareas_settings_dialog import SettingsDialog
 
 
 class PriorityAreasPlugin:
@@ -67,6 +68,17 @@ class PriorityAreasPlugin:
         # Keep toolbar buttons in sync when the user switches to another tool.
         self.canvas.mapToolSet.connect(self._on_map_tool_set)
 
+        # Settings — edit habitats, colours and check types.
+        self.toolbar.addSeparator()
+        self.action_settings = QAction(
+            self._icon("settings"), "Priority Areas settings…", self.iface.mainWindow()
+        )
+        self.action_settings.setToolTip("Edit habitats, colours and check types")
+        self.action_settings.triggered.connect(self._open_settings)
+        self.toolbar.addAction(self.action_settings)
+        self.iface.addPluginToMenu("Priority Areas", self.action_settings)
+        self.actions.append(self.action_settings)
+
     def _icon(self, mode):
         """Per-geometry icon: icon_<mode>.png|svg if present, else the
         generic icon. Drop your own icon_point / icon_line / icon_polygon
@@ -107,6 +119,10 @@ class PriorityAreasPlugin:
             self.map_tool.set_mode(mode)
             self.canvas.setMapTool(self.map_tool)
         return activate
+
+    def _open_settings(self):
+        dlg = SettingsDialog(self.iface, self.iface.mainWindow())
+        dlg.exec()
 
     def _on_map_tool_set(self, new_tool, old_tool=None):
         if new_tool is not self.map_tool and self.action_group is not None:

@@ -2,12 +2,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Greg West
 """
-Priority Areas configuration.
+Priority Areas — default vocabulary.
 
-Edit this one file to reshape the tool's vocabulary. The habitat classes the
-desktop mapper picks from, the colours those classes draw with, and the check
-types the field team act on all live here. Change these and the dialog, the
-stored values and the legend follow.
+These values are the DEFAULTS. On first run they seed a settings file in your
+QGIS profile (PriorityAreas/vocabulary.json); after that, the plugin reads the
+vocabulary from there, and the Settings dialog (or hand-editing that JSON) is
+how you change habitats, colours and check types. Editing this file only
+changes what a fresh install / a "Reset to defaults" starts from.
+
+The storage names at the bottom are not user-editable and are read from here.
 """
 
 # ----------------------------------------------------------------------
@@ -16,7 +19,9 @@ stored values and the legend follow.
 # ----------------------------------------------------------------------
 HABITATS = [
     "Posidonia",
+    "Posidonia/Zostera",
     "Zostera",
+    "Halophila",
     "Mangrove",
     "Saltmarsh",
     "Seagrass",
@@ -24,15 +29,15 @@ HABITATS = [
 ]
 
 HABITAT_COLORS = {
-    "Posidonia": "#ff0080",   # Red
-    "Zostera":   "#0BF5FD",   # Light blue
+    "Posidonia": "#ff0000",   # Red
+    "Posidonia/Zostera":  "#e100ff",  # Pink
+    "Zostera":   "#008CFF",   # Light blue
+    "Halophila": "#FFAE00",   # Orange
     "Mangrove":  "#13DF00",   # Bright green
-    "Saltmarsh": "#FFBD17",   # gold
+    "Saltmarsh": "#B8B503",   # gold
     "Seagrass":  "#00ACC1",   # cyan (generic seagrass)
     "Other":     "#8C00FF",   # purple
 }
-
-DEFAULT_HABITAT = "Posidonia"
 
 # ----------------------------------------------------------------------
 # Check type — what the field ops team needs to look at. Used as the label.
@@ -40,15 +45,17 @@ DEFAULT_HABITAT = "Posidonia"
 CHECK_TYPES = [
     "Check boundary",
     "Check presence/absence",
+    "Check classification and boundary",
     "Check density/condition",
     "Confirm classification",
     "Mooring scar check",
     "Possible dieback",
+    "Mangrove - Drone area",
+    "Saltmarsh - Drone area",
     "Drone area",
+    "Video",
     "Other",
 ]
-
-DEFAULT_CHECK_TYPE = "Check boundary"
 
 # ----------------------------------------------------------------------
 # Storage — a GeoPackage in the project folder, one layer per geometry

@@ -45,9 +45,8 @@ except AttributeError:
     _T_DOUBLE = QMetaType.Type.Double
     _T_INT = QMetaType.Type.Int
 
+from . import priorityareas_vocabulary as vocab
 from .priorityareas_config import (
-    HABITATS,
-    HABITAT_COLORS,
     GROUP_NAME,
 )
 
@@ -233,10 +232,12 @@ def _symbol_for(geom_type, color):
 
 
 def apply_habitat_style(layer, geom_type):
-    """Categorized renderer keyed on 'habitat', coloured by config."""
+    """Categorized renderer keyed on 'habitat', coloured by the vocabulary."""
+    habitats = vocab.habitats()
+    colors = vocab.habitat_colors()
     categories = []
-    for habitat in HABITATS:
-        color = HABITAT_COLORS.get(habitat, "#888888")
+    for habitat in habitats:
+        color = colors.get(habitat, "#888888")
         categories.append(
             QgsRendererCategory(habitat, _symbol_for(geom_type, color), habitat)
         )
@@ -288,3 +289,47 @@ def apply_label(layer):
     layer.setLabelsEnabled(True)
     layer.setLabeling(labeling)
     layer.triggerRepaint()
+
+
+def _geom_key(layer):
+    """Map a layer's geometry type to 'point' / 'line' / 'polygon'."""
+    gt = layer.geometryType()
+    try:
+        if gt == Qgis.GeometryType.Point:
+            return "point"
+        if gt == Qgis.GeometryType.Line:
+            return "line"
+        if gt == Qgis.GeometryType.Polygon:
+            return "polygon"
+    except AttributeError:
+        if gt == QgsWkbTypes.PointGeometry:
+            return "point"
+        if gt == QgsWkbTypes.LineGeometry:
+            return "line"
+        if gt == QgsWkbTypes.PolygonGeometry:
+            return "polygon"
+    return None
+
+
+def restyle_project_layers(project=None):
+    """Re-apply habitat styling + labels to Priority Areas layers already in
+    the project, so vocabulary/colour changes show on existing annotations.
+
+    Returns the number of layers restyled. Only touches styling — never data.
+    """
+    if project is None:
+        project = QgsProject.instance()
+    group = project.layerTreeRoot().findGroup(GROUP_NAME)
+    if group is None:
+        return 0
+    count = 0
+    for tree_layer in group.findLayers():
+        layer = tree_layer.layer()
+        if layer is None:
+            continue
+        geom = _geom_key(layer)
+        if geom:
+            apply_habitat_style(layer, geom)
+            apply_label(layer)
+            count += 1
+    return count

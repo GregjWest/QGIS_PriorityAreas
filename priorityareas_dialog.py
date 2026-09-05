@@ -19,10 +19,7 @@ from qgis.PyQt.QtWidgets import (
     QDialogButtonBox,
 )
 
-from .priorityareas_config import (
-    HABITATS,
-    CHECK_TYPES,
-)
+from . import priorityareas_vocabulary as vocab
 
 # Standard-button enum: scoped under StandardButton in Qt6, unscoped in Qt5.
 try:
@@ -49,11 +46,11 @@ class PriorityAreasDialog(QDialog):
         form = QFormLayout()
 
         self.cmb_habitat = QComboBox()
-        self.cmb_habitat.addItems(HABITATS)
+        self.cmb_habitat.addItems(vocab.habitats())
         self._select(self.cmb_habitat, habitat_default)
 
         self.cmb_check = QComboBox()
-        self.cmb_check.addItems(CHECK_TYPES)
+        self.cmb_check.addItems(vocab.check_types())
         self._select(self.cmb_check, check_default)
 
         self.txt_note = QPlainTextEdit()
