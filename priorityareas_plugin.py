@@ -50,9 +50,12 @@ class PriorityAreasPlugin:
         self.action_group.setExclusive(True)
 
         specs = [
-            ("point",   "Priority Areas point",   "Flag a spot for field validation"),
-            ("line",    "Priority Areas line",    "Flag a boundary or transect to check"),
-            ("polygon", "Priority Areas area",    "Flag an area to prioritise for validation"),
+            ("point",   "Priority Areas point",
+             "Mark a spot for field validation"),
+            ("line",    "Priority Areas line",
+             "Draw a boundary or transect to check"),
+            ("polygon", "Priority Areas area",
+             "Define an area to prioritise for validation"),
         ]
 
         for mode, text, tip in specs:
@@ -71,9 +74,11 @@ class PriorityAreasPlugin:
         # Settings — edit habitats, colours and check types.
         self.toolbar.addSeparator()
         self.action_settings = QAction(
-            self._icon("settings"), "Priority Areas settings…", self.iface.mainWindow()
+            self._icon(
+                "settings"), "Priority Areas settings…", self.iface.mainWindow()
         )
-        self.action_settings.setToolTip("Edit habitats, colours and check types")
+        self.action_settings.setToolTip(
+            "Edit habitats, colours and check types")
         self.action_settings.triggered.connect(self._open_settings)
         self.toolbar.addAction(self.action_settings)
         self.iface.addPluginToMenu("Priority Areas", self.action_settings)
