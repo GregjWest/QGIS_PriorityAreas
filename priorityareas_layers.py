@@ -191,6 +191,11 @@ def get_or_create_layer(layer_name, geom_type, group, project, gpkg_path):
 
     project.addMapLayer(layer, False)
     group.addLayer(layer)
+
+    layer_node = group.findLayer(layer.id())
+    if layer_node:
+        layer_node.setExpanded(False)
+
     return layer
 
 
