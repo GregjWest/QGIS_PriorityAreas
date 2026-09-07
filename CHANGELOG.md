@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/), and this project aims to follow
 [Semantic Versioning](https://semver.org/).
 
+## [0.7.0] - 2026-09-05
+
+### Added
+- **Label settings** in the Settings dialog:
+  - Toggle to **include the habitat class in the label**, formatted as `habitat - check type` (with the note still appended underneath when present).
+  - Adjustable label **font size**, **text colour**, and **halo (buffer) colour** with an on/off toggle.
+- Label settings persist in the vocabulary settings file and, like colours, are pushed to existing layers when "Update existing Priority Areas layers" is ticked on save.
+
 ## [0.6.1] - 2026-09-05
 
 ### Added
@@ -37,6 +45,7 @@ First public release.
 - **QGIS 3.16+ and QGIS 4.x (Qt5/Qt6) support**, including scoped-enum and field-type handling for Qt6, and `qgisMaximumVersion=4.99` so the plugin loads under QGIS 4.
 - Project documentation: README, GPL-3.0-or-later licensing and per-file SPDX headers.
 
+[0.7.0]: https://github.com/GregjWest/QGIS_PriorityAreas/releases/tag/v0.7.0
 [0.6.1]: https://github.com/GregjWest/QGIS_PriorityAreas/releases/tag/v0.6.1
 [0.6.0]: https://github.com/GregjWest/QGIS_PriorityAreas/releases/tag/v0.6.0
 [0.5.0]: https://github.com/GregjWest/QGIS_PriorityAreas/releases/tag/v0.5.0

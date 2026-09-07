@@ -16,9 +16,11 @@ from qgis.PyQt.QtWidgets import (
     QDialog,
     QVBoxLayout,
     QHBoxLayout,
+    QFormLayout,
     QLabel,
     QGroupBox,
     QCheckBox,
+    QDoubleSpinBox,
     QTableWidget,
     QTableWidgetItem,
     QListWidget,
@@ -139,6 +141,46 @@ class SettingsDialog(QDialog):
         chk_btns.addStretch()
         chk_layout.addLayout(chk_btns)
         layout.addWidget(chk_box)
+
+        # --- Label styling -------------------------------------------
+        lbl_box = QGroupBox("Labels")
+        lbl_layout = QVBoxLayout(lbl_box)
+
+        labels = data.get("labels", {})
+
+        self.chk_include_habitat = QCheckBox(
+            "Include habitat in the label   (habitat - check type)"
+        )
+        self.chk_include_habitat.setChecked(bool(labels.get("include_habitat", False)))
+        lbl_layout.addWidget(self.chk_include_habitat)
+
+        lbl_form = QFormLayout()
+
+        self.spin_font = QDoubleSpinBox()
+        self.spin_font.setRange(4.0, 96.0)
+        self.spin_font.setDecimals(1)
+        self.spin_font.setSingleStep(0.5)
+        self.spin_font.setValue(float(labels.get("font_size", 8.0)))
+        lbl_form.addRow("Font size", self.spin_font)
+
+        self.btn_text_color = QgsColorButton()
+        self.btn_text_color.setColorDialogTitle("Label text colour")
+        self.btn_text_color.setColor(QColor(labels.get("text_color", "#111111")))
+        lbl_form.addRow("Text colour", self.btn_text_color)
+
+        halo_row = QHBoxLayout()
+        self.chk_buffer = QCheckBox("Halo behind text")
+        self.chk_buffer.setChecked(bool(labels.get("buffer_enabled", True)))
+        self.btn_buffer_color = QgsColorButton()
+        self.btn_buffer_color.setColorDialogTitle("Halo colour")
+        self.btn_buffer_color.setColor(QColor(labels.get("buffer_color", "#FFFFFF")))
+        halo_row.addWidget(self.chk_buffer)
+        halo_row.addWidget(self.btn_buffer_color)
+        halo_row.addStretch()
+        lbl_form.addRow("Halo", halo_row)
+
+        lbl_layout.addLayout(lbl_form)
+        layout.addWidget(lbl_box)
 
         # --- Apply-to-existing option --------------------------------
         self.chk_apply_existing = QCheckBox(
@@ -264,7 +306,15 @@ class SettingsDialog(QDialog):
             QMessageBox.warning(self, "Priority Areas", "Check types must be unique.")
             return
 
-        if not vocab.save({"habitats": habitats, "check_types": checks}):
+        labels = {
+            "include_habitat": self.chk_include_habitat.isChecked(),
+            "font_size": self.spin_font.value(),
+            "text_color": self.btn_text_color.color().name(),
+            "buffer_enabled": self.chk_buffer.isChecked(),
+            "buffer_color": self.btn_buffer_color.color().name(),
+        }
+
+        if not vocab.save({"habitats": habitats, "check_types": checks, "labels": labels}):
             QMessageBox.critical(
                 self, "Priority Areas", "Could not write the settings file."
             )
@@ -294,3 +344,9 @@ class SettingsDialog(QDialog):
         self.list.clear()
         for check in data["check_types"]:
             self._add_check_item(check)
+        labels = data["labels"]
+        self.chk_include_habitat.setChecked(bool(labels.get("include_habitat", False)))
+        self.spin_font.setValue(float(labels.get("font_size", 8.0)))
+        self.btn_text_color.setColor(QColor(labels.get("text_color", "#111111")))
+        self.chk_buffer.setChecked(bool(labels.get("buffer_enabled", True)))
+        self.btn_buffer_color.setColor(QColor(labels.get("buffer_color", "#FFFFFF")))

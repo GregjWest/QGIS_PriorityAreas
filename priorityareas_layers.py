@@ -251,23 +251,39 @@ def apply_habitat_style(layer, geom_type):
 
 
 def apply_label(layer):
-    """Label each feature with its check type; placement per geometry."""
-    pal = QgsPalLayerSettings()
-    pal.fieldName = (
-        '"check_type" || '
-        'if("note" IS NOT NULL AND "note" != \'\', \'\\n\' || "note", \'\')'
+    """Label features from the current label settings; placement per geometry."""
+    cfg = vocab.label_settings()
+
+    include_habitat = bool(cfg.get("include_habitat", False))
+    try:
+        font_size = float(cfg.get("font_size", 8.0))
+    except (TypeError, ValueError):
+        font_size = 8.0
+    text_color = cfg.get("text_color", "#111111")
+    buffer_enabled = bool(cfg.get("buffer_enabled", True))
+    buffer_color = cfg.get("buffer_color", "#FFFFFF")
+
+    note_part = (
+        "if(\"note\" IS NOT NULL AND \"note\" != '', '\\n' || \"note\", '')"
     )
+    if include_habitat:
+        expression = "\"habitat\" || ' - ' || \"check_type\" || " + note_part
+    else:
+        expression = "\"check_type\" || " + note_part
+
+    pal = QgsPalLayerSettings()
+    pal.fieldName = expression
     pal.isExpression = True
     pal.enabled = True
 
     text_format = QgsTextFormat()
-    text_format.setColor(QColor("#111111"))
-    text_format.setSize(8)
+    text_format.setColor(QColor(text_color))
+    text_format.setSize(font_size)
 
     buffer_settings = QgsTextBufferSettings()
-    buffer_settings.setEnabled(True)
+    buffer_settings.setEnabled(buffer_enabled)
     buffer_settings.setSize(1)
-    buffer_settings.setColor(QColor("#FFFFFF"))
+    buffer_settings.setColor(QColor(buffer_color))
     text_format.setBuffer(buffer_settings)
 
     pal.setFormat(text_format)

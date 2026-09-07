@@ -48,14 +48,25 @@ CHECK_TYPES = [
     "Check classification and boundary",
     "Check density/condition",
     "Confirm classification",
-    "Mooring scar check",
+    "Check Mooring scar",
     "Possible dieback",
-    "Mangrove - Drone area",
-    "Saltmarsh - Drone area",
     "Drone area",
-    "Video",
+    "Video transect",
+    "Photos",
     "Other",
 ]
+
+# ----------------------------------------------------------------------
+# Label defaults — how annotation labels look. These seed the settings
+# file; change them live in the Settings dialog (Labels section).
+# ----------------------------------------------------------------------
+LABEL_DEFAULTS = {
+    "include_habitat": False,   # prefix the label with "habitat - "
+    "font_size": 10.0,
+    "text_color": "#111111",
+    "buffer_enabled": True,     # halo behind the text
+    "buffer_color": "#FFFFFF",
+}
 
 # ----------------------------------------------------------------------
 # Storage — a GeoPackage in the project folder, one layer per geometry

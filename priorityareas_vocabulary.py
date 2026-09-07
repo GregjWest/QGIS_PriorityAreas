@@ -19,7 +19,7 @@ import json
 
 from qgis.core import QgsApplication
 
-from .priorityareas_config import HABITATS, HABITAT_COLORS, CHECK_TYPES
+from .priorityareas_config import HABITATS, HABITAT_COLORS, CHECK_TYPES, LABEL_DEFAULTS
 
 _FALLBACK_COLOR = "#888888"
 
@@ -47,6 +47,7 @@ def defaults():
             for name in HABITATS
         ],
         "check_types": list(CHECK_TYPES),
+        "labels": dict(LABEL_DEFAULTS),
     }
 
 
@@ -85,7 +86,16 @@ def load():
     checks = [str(c) for c in data["check_types"] if str(c).strip()]
     if not habitats or not checks:
         return defaults()
-    return {"habitats": habitats, "check_types": checks}
+
+    # Merge stored label settings over the defaults (tolerate missing keys).
+    labels = dict(LABEL_DEFAULTS)
+    stored_labels = data.get("labels")
+    if isinstance(stored_labels, dict):
+        for key in LABEL_DEFAULTS:
+            if key in stored_labels:
+                labels[key] = stored_labels[key]
+
+    return {"habitats": habitats, "check_types": checks, "labels": labels}
 
 
 def save(data):
@@ -117,6 +127,17 @@ def habitat_colors():
 
 def check_types():
     return list(load()["check_types"])
+
+
+def label_settings():
+    """Merged label style settings (defaults + any stored overrides)."""
+    labels = load().get("labels", {})
+    merged = dict(LABEL_DEFAULTS)
+    if isinstance(labels, dict):
+        for key in LABEL_DEFAULTS:
+            if key in labels:
+                merged[key] = labels[key]
+    return merged
 
 
 def default_habitat():
