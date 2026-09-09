@@ -75,7 +75,7 @@ Open **Priority Areas settings…** from the toolbar (gear icon) or **Plugins �
 
 - **Add, remove, rename and reorder habitats**, and set each one's map colour with a colour picker.
 - **Edit the check-type list** (double-click to rename; add/remove/reorder).
-- **Style the labels** — optionally include the habitat in the label (`habitat - check type`), and set the font size, text colour and halo colour.
+- **Style the labels** — optionally exclude the `habitat` name in the label showing only `check type` and `notes`, and set the font size, text colour and halo colour.
 - **Update existing layers on save** — a checkbox re-applies colours and labels to annotation layers already in the current project (styling only, never data).
 - **Reset to defaults** to return to the values shipped in `priorityareas_config.py`.
 

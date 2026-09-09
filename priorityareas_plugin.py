@@ -50,9 +50,9 @@ class PriorityAreasPlugin:
         self.action_group.setExclusive(True)
 
         specs = [
-            ("point",   "Priority Areas point",   "Flag a spot for field validation"),
-            ("line",    "Priority Areas line",    "Flag a boundary or transect to check"),
-            ("polygon", "Priority Areas area",    "Flag an area to prioritise for validation"),
+            ("point",   "Priority Areas point",   "Mark a spot for field validation"),
+            ("line",    "Priority Areas line",    "Draw a boundary or transect to check"),
+            ("polygon", "Priority Areas area",    "Define an area to prioritise for validation"),
         ]
 
         for mode, text, tip in specs:
