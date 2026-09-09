@@ -60,7 +60,7 @@ CHECK_TYPES = [
 # file; change them live in the Settings dialog (Labels section).
 # ----------------------------------------------------------------------
 LABEL_DEFAULTS = {
-    "include_habitat": False,   # prefix the label with "habitat - "
+    "exclude_habitat": False,   # prefix the label with "habitat - "
     "font_size": 10.0,
     "text_color": "#111111",
     "buffer_enabled": True,     # halo behind the text

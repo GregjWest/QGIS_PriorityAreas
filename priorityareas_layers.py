@@ -259,7 +259,7 @@ def apply_label(layer):
     """Label features from the current label settings; placement per geometry."""
     cfg = vocab.label_settings()
 
-    include_habitat = bool(cfg.get("include_habitat", False))
+    exclude_habitat = bool(cfg.get("exclude_habitat", False))
     try:
         font_size = float(cfg.get("font_size", 8.0))
     except (TypeError, ValueError):
@@ -271,10 +271,10 @@ def apply_label(layer):
     note_part = (
         "if(\"note\" IS NOT NULL AND \"note\" != '', '\\n' || \"note\", '')"
     )
-    if include_habitat:
-        expression = "\"habitat\" || ' - ' || \"check_type\" || " + note_part
-    else:
+    if exclude_habitat:
         expression = "\"check_type\" || " + note_part
+    else:
+        expression = "\"habitat\" || ' - ' || \"check_type\" || " + note_part
 
     pal = QgsPalLayerSettings()
     pal.fieldName = expression

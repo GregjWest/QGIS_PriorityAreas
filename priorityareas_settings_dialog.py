@@ -148,11 +148,11 @@ class SettingsDialog(QDialog):
 
         labels = data.get("labels", {})
 
-        self.chk_include_habitat = QCheckBox(
-            "Include habitat in the label   (habitat - check type)"
+        self.chk_exclude_habitat = QCheckBox(
+            "Exclude habitat in the label   (Check type and Note)"
         )
-        self.chk_include_habitat.setChecked(bool(labels.get("include_habitat", False)))
-        lbl_layout.addWidget(self.chk_include_habitat)
+        self.chk_exclude_habitat.setChecked(bool(labels.get("exclude_habitat", False)))
+        lbl_layout.addWidget(self.chk_exclude_habitat)
 
         lbl_form = QFormLayout()
 
@@ -307,7 +307,7 @@ class SettingsDialog(QDialog):
             return
 
         labels = {
-            "include_habitat": self.chk_include_habitat.isChecked(),
+            "exclude_habitat": self.chk_exclude_habitat.isChecked(),
             "font_size": self.spin_font.value(),
             "text_color": self.btn_text_color.color().name(),
             "buffer_enabled": self.chk_buffer.isChecked(),
@@ -345,7 +345,7 @@ class SettingsDialog(QDialog):
         for check in data["check_types"]:
             self._add_check_item(check)
         labels = data["labels"]
-        self.chk_include_habitat.setChecked(bool(labels.get("include_habitat", False)))
+        self.chk_exclude_habitat.setChecked(bool(labels.get("exclude_habitat", False)))
         self.spin_font.setValue(float(labels.get("font_size", 8.0)))
         self.btn_text_color.setColor(QColor(labels.get("text_color", "#111111")))
         self.chk_buffer.setChecked(bool(labels.get("buffer_enabled", True)))
